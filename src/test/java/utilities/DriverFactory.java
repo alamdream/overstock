@@ -1,6 +1,8 @@
 package utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,10 +13,12 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
 public class DriverFactory {
+    private static final Logger LOGGER = LogManager.getLogger(DriverFactory.class);
+
     //do not allow to initialize this class from outside
     private DriverFactory(){
-        // do - nothing-- empty constructor
     }
     private static final DriverFactory instance = new DriverFactory();
 
@@ -25,7 +29,6 @@ public class DriverFactory {
     // thread local driver object for WebDriver
     ThreadLocal<WebDriver> driver = ThreadLocal.withInitial(()->{
         String env = System.getProperty("environment") == null ? "local" : System.getProperty("environment");
-        env = "test";
         String browser = System.getProperty("browser") == null ? "chrome" : System.getProperty("browser");
         URL gridUrl = null;
 
@@ -34,6 +37,7 @@ public class DriverFactory {
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            LOGGER.error(e.getMessage());
         }
 
         if(env.equals("remote") && browser.equals("chrome")){

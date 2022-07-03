@@ -1,35 +1,49 @@
 package page_objects;
 
+
 import command_providers.ActOn;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class NavigationBar {
+    public static final Logger LOGGER = LogManager.getLogger(NavigationBar.class);
     public WebDriver driver;
-    private final By MortgageCalculatorLogo = By.xpath("//header/div[1]/div[1]/a[1]/img[1]");
-    private final By RatesLink = By.linkText("Rates");
-    private final By RealAprLink = By.linkText("Real APR");
-
-    public NavigationBar (WebDriver driver){
-
+    private final By OverstockLogo = By.xpath("//a[@class='Logo_logoContainer_32']");
+    private final By NotificationLink = By.name("Notifications");
+    private final By CartLink = By.xpath("//a[@href='/cart']");
+    private final By OutdoorLink = By.xpath("//a[text()='Outdoor']");
+    private final By SunSailsLink = By.xpath("//a[text()='Sunsails']");
+    public NavigationBar(WebDriver driver){
         this.driver = driver;
     }
 
-    // navigate to the home page
-    public Home navigateToHome(){
-        ActOn.element(driver, MortgageCalculatorLogo).click();
-        return new Home(driver);
+    // navigate to Home page
+    public HomePage navigateToMyHome(){
+        ActOn.element(driver, OverstockLogo).click();
+        return new HomePage(driver);
     }
 
-    //Mouse hover to the rates link
-    public NavigationBar mouseHoverToRates(){
-        ActOn.element(driver,RatesLink).mouseHover();
+    public Notification openNotifications(){
+        ActOn.element(driver, NotificationLink).click();
+        return new Notification(driver);
+    }
+
+    public Cart navigateToCart() throws InterruptedException {
+        ActOn.element(driver, CartLink).click();
+        Thread.sleep(3000);
+        return new Cart(driver);
+    }
+
+    public NavigationBar mouseHoverToOutdoor(){
+        ActOn.element(driver, OutdoorLink).mouseHover();
         return this;
     }
 
-    // navigate to the real APR page
-    public RealApr navigateToRealApr(){
-        ActOn.element(driver,RealAprLink).click();
-        return new RealApr(driver);
+    public SunSails navigateToSunSails(){
+        ActOn.element(driver, SunSailsLink).click();
+        return new SunSails(driver);
     }
+
 }
