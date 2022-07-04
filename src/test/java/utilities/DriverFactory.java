@@ -36,8 +36,7 @@ public class DriverFactory {
             gridUrl = new URL(ReadConfigFiles.getPropertyValues("GridURL"));
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
-            LOGGER.error(e.getMessage());
+            LOGGER.error("Error occurred for gridUrl: " + e.getMessage());
         }
 
         if(env.equals("remote") && browser.equals("chrome")){
