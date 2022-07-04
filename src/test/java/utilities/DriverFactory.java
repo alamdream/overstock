@@ -34,6 +34,7 @@ public class DriverFactory {
 
         try {
             gridUrl = new URL(ReadConfigFiles.getPropertyValues("GridURL"));
+            LOGGER.info("gridUrl=" + gridUrl);
 
         } catch (MalformedURLException e) {
             LOGGER.error("Error occurred for gridUrl: " + e.getMessage());
